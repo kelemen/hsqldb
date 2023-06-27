@@ -209,6 +209,7 @@ public class FunctionCustom extends FunctionSQL {
     private static final int FUNC_NANVL                    = 195;
     private static final int FUNC_SQLCODE                  = 196;
     private static final int FUNC_SQLERRM                  = 197;
+    private static final int FUNC_SLEEP                   = 198;
 
     //
     static final IntKeyIntValueHashMap customRegularFuncMap =
@@ -396,6 +397,7 @@ public class FunctionCustom extends FunctionSQL {
         customRegularFuncMap.put(Tokens.UUID, FUNC_UUID);
         customRegularFuncMap.put(Tokens.WEEK, FUNC_EXTRACT);
         customRegularFuncMap.put(Tokens.YEAR, FUNC_EXTRACT);
+        customRegularFuncMap.put(Tokens.SLEEP, FUNC_SLEEP);
     }
     //J+
     static final IntKeyIntValueHashMap customValueFuncMap =
@@ -577,6 +579,7 @@ public class FunctionCustom extends FunctionSQL {
                 parseList = emptyParamList;
                 break;
 
+            case FUNC_SLEEP :
             case FUNC_ACOS :
             case FUNC_ASCII :
             case FUNC_ASCIISTR :
@@ -2591,6 +2594,18 @@ public class FunctionCustom extends FunctionSQL {
 
                 return translateWithMap((String) data[0], map);
             }
+            case FUNC_SLEEP : {
+                Object sleepArg = data[0];
+                if (sleepArg != null) {
+                    long sleepMs = Math.round(NumberType.toDouble(sleepArg) * 1000.0);
+                    try {
+                        Thread.sleep(sleepMs);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                return null;
+            }
             default :
                 throw Error.runtimeError(ErrorCode.U_S0500, "FunctionCustom");
         }
@@ -3315,6 +3330,7 @@ public class FunctionCustom extends FunctionSQL {
 
                 break;
             }
+            case FUNC_SLEEP :
             case FUNC_ACOS :
             case FUNC_ASIN :
             case FUNC_ATAN :
@@ -4314,6 +4330,7 @@ public class FunctionCustom extends FunctionSQL {
             case FUNC_TO_DSINTERVAL :
             case FUNC_TO_YMINTERVAL :
             case FUNC_TRANSLATE :
+            case FUNC_SLEEP :
                 return getSQLSimple();
 
             case FUNC_DIAGNOSTICS : {

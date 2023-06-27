@@ -1005,6 +1005,7 @@ public class Tokens {
     static final String        T_UNIX_MILLIS      = "UNIX_MILLIS";
     static final String        T_UNIX_TIMESTAMP   = "UNIX_TIMESTAMP";
     public static final String T_UUID             = "UUID";
+    static final String        T_SLEEP            = "SLEEP";
 
     //
     static final String T_ISOLATION_LEVEL         = "ISOLATION_LEVEL";
@@ -1978,6 +1979,7 @@ public class Tokens {
     public static final int X_MALFORMED_IDENTIFIER     = 1025;
     public static final int X_MALFORMED_UNICODE_ESCAPE = 1026;
 
+    public static final int SLEEP = 1100;
     //
     public static final int X_UNKNOWN_TOKEN = -1;
     private static final IntValueHashMap reservedKeys =
@@ -2758,6 +2760,7 @@ public class Tokens {
         commandSet.put(T_WEEK, WEEK);
         commandSet.put(T_WEEK_OF_YEAR, WEEK_OF_YEAR);
         commandSet.put(T_ISO_WEEK_OF_YEAR, ISO_WEEK_OF_YEAR);
+        commandSet.put(T_SLEEP, SLEEP);
 
         //
         commandSet.put(T_ISOLATION_LEVEL, ISOLATION_LEVEL);
